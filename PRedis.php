@@ -93,7 +93,7 @@ class PRedis implements Redis
     public function brpop(array $keys, int $timeout): ?RedisResult
     {
         try {
-            if ($result = $this->redis->brpop($keys, $timeout)) {
+            if ($result = $this->redis->blpop($keys, $timeout)) {
                 return new RedisResult($result[0], $result[1]);
             }
 
@@ -106,7 +106,7 @@ class PRedis implements Redis
     public function rpop(string $key): ?RedisResult
     {
         try {
-            if ($message = $this->redis->rpop($key)) {
+            if ($message = $this->redis->lpop($key)) {
                 return new RedisResult($key, $message);
             }
 
